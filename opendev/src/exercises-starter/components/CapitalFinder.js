@@ -1,32 +1,45 @@
 // Exercises 2 and 3
 
-import { useState } from 'react';
-import { fetchCountryInfo } from '../utils';
+import { useState } from "react";
+import { fetchCountryInfo } from "../utils";
 
 /**
  * Displays the capital city of a given country.
  */
 const CapitalFinder = () => {
-  const [query, setQuery] = useState('australia');
-  const [country, setCountry] = useState(null);
+  const [location, setLocation] = useState({
+    country: "australia",
+    countryInfo: {
+      capital: ["Canberra"],
+    },
+  });
 
-  // FIXME: Prevent the infinite render loop with useEffect
-  const updateInfo = async () => {
-    const countryInfo = await fetchCountryInfo(query);
-    setCountry(countryInfo);
+  const updateInfo = async (country) => {
+    const countryInfo = await fetchCountryInfo(country);
+    return { country: country, countryInfo: countryInfo };
   };
 
-  // updateInfo();
+  const updateLocation = async (query) => {
+    const newLocation = await updateInfo(query);
+    setLocation(newLocation);
+  };
 
-  console.log('Country:', country);
+  const handleOnSubmit = () => {};
 
   return (
     <div>
       <h2>Capital Finder</h2>
-      <button onClick={() => setQuery('australia')}>Australia</button>
-      <button onClick={() => setQuery('canada')}>Canada</button>
-      <button onClick={() => setQuery('new zealand')}>New Zealand</button>
-      <p>The capital city of COUNTRY is CITY.</p>
+      <button onClick={() => updateLocation("australia")}>Australia</button>
+      <button onClick={() => updateLocation("canada")}>Canada</button>
+      <button onClick={() => updateLocation("new zealand")}>New Zealand</button>
+      <form onSubmit={handleOnSubmit}>
+        <input type="text" placeholder="search"></input>
+        <input type="submit"></input>
+      </form>
+      <p>
+        The capital city of {location.country} is{" "}
+        {location.countryInfo?.capital[0]}.
+      </p>
     </div>
   );
 };
