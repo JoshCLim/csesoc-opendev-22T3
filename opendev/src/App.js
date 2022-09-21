@@ -1,15 +1,16 @@
+import Hello from "./workshop-code/components/Hello";
+import Counter from "./exercises-starter/components/Counter";
+
 const App = () => {
-  let message = 'Hello, world!';
-
-  // gets called when the button is clicked
-  const handleOnClick = () => {
-    // TODO: Update message to 'Hello, Open Dev!'
-  };
-
   return (
     <div>
-      <p>{message}</p>
-      <button onClick={handleOnClick}>Update message</button>
+      <h1>demo</h1>
+      <Hello />
+
+      <h1>exercises</h1>
+      <h3>counter</h3>
+      <Counter />
+      <Counter />
     </div>
   );
 };
